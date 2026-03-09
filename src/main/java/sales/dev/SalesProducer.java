@@ -1,5 +1,7 @@
 package sales.dev;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -36,6 +38,16 @@ public class SalesProducer {
             Map.entry("Kisii",     new double[]{-0.6817, 34.7667}),
             Map.entry("Nyamira",   new double[]{-0.5633, 34.9358})
         );
+
+         // Product categories and products
+        Map<String, List<String>> categoryProducts = Map.ofEntries(
+            Map.entry("Electronics", List.of("Laptop", "Smartphone", "Headphones", "Tablet", "Monitor")),
+            Map.entry("Clothing", List.of("T-Shirt", "Jeans", "Jacket", "Sneakers", "Dress")),
+            Map.entry("Books", List.of("Novel", "Textbook", "Comic Book", "Biography", "Cookbook")),
+            Map.entry("Home & Kitchen", List.of("Blender", "Coffee Maker", "Pillow", "Towel Set", "Knife Set"))
+        );
+
+        List<String> cities = new ArrayList<>(kenyaCities.keySet());
 
     }
 
