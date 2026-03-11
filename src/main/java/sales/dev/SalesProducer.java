@@ -59,6 +59,36 @@ public class SalesProducer {
         props.put(ProducerConfig.RETRIES_CONFIG, 3);
 
 
+        try (KafkaProducer<String, SpecificRecord> producer = new KafkaProducer<>(props)) {
+
+            // Generate Kenyan customers
+            int numCustomers = 80;
+            List<String> generatedCustomerIds = new ArrayList<>();
+
+            for (int i = 0; i < numCustomers; i++) {
+                String customerId = "CUST-" + String.format("%05d", i + 1);
+                generatedCustomerIds.add(customerId);
+
+                String city = cities.get(faker.number().numberBetween(0, cities.size()));
+                double[] latLon = kenyaCities.get(city);
+
+                CustomerEvent cust = new CustomerEvent();
+                cust.setCustomerId(customerId);
+                cust.setFirstName(faker.name().firstName());
+                cust.setLastName(faker.name().lastName());
+                cust.setEmail(faker.internet().safeEmailAddress());
+                cust.setCountry("Kenya");
+                cust.setCity(city);
+                cust.setLatitude(latLon[0]);
+                cust.setLongitude(latLon[1]);
+                cust.setCardNumber(faker.finance().creditCard().replaceAll("\\D", ""));
+                cust.setTimestamp(Instant.now());
+
+                producer.send(new ProducerRecord<>("customer-profile", customerId, cust)).get();
+                System.out.println("Created customer: " + customerId + " in " + city);
+                TimeUnit.MILLISECONDS.sleep(150);
+            }
+        }
     }
 
 }
