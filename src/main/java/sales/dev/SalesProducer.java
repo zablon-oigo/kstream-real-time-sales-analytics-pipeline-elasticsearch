@@ -147,6 +147,8 @@ public class SalesProducer {
                 TimeUnit.MILLISECONDS.sleep(faker.number().numberBetween(400, 3000));
             }
 
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
