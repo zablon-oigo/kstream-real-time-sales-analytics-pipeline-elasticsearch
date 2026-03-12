@@ -89,6 +89,18 @@ public class SalesProducer {
                 TimeUnit.MILLISECONDS.sleep(150);
             }
             System.out.println("All customers created. Starting sales orders...");
+
+            // Generate sales orders 
+            while (true) {
+
+                // Pick a random customer
+                String customerId = generatedCustomerIds.get(faker.number().numberBetween(0, generatedCustomerIds.size()));
+
+                // Pick a city for delivery
+                String city = cities.get(faker.number().numberBetween(0, cities.size()));
+                double[] latLon = kenyaCities.get(city);
+            }
+
         }
     }
 
