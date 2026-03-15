@@ -37,5 +37,10 @@ public class SalesEnrichmentProcessor {
 
             return sale;
         });
+
+        KStream<String, SalesEvent> salesByCustomer =
+                maskedSales.selectKey(
+                        (key, sale) -> sale.getCustomerId()
+                );
     }
 }
