@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.Topology;
@@ -68,8 +69,10 @@ public class SalesStreamProcessor {
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, SpecificAvroSerde.class.getName());
         props.put("schema.registry.url", schemaRegistryUrl);
+        
+        Topology topology = buildTopology(schemaRegistryUrl);
 
-
+        KafkaStreams streams = new KafkaStreams(topology, props);
         }
 
 }
